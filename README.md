@@ -20,7 +20,7 @@ This is a demonstrator Twitter streaming API client for the DIT029 course at [Go
 
 1.  Clone the repo
 
-        $ git clone https://github.com/michalpalka/dit029-twitter-miner.git
+        $ git clone https://github.com/KorvMedBrod/dit029-twitter-miner.git
 
 1.  Get the dependencies
 
@@ -84,7 +84,6 @@ ibrowse is an HTTP client allowing to close a connection while the request is st
 
 jiffy is a JSON parser, which uses efficient C code to perform the actual parsing. [mochijson2](https://github.com/bjnortier/mochijson2) is another alternative that could be used here.
 
-## Author
-
+## Original Author
 * Michał Pałka (michalpalka) <michal.palka@chalmers.se>
-
+* https://github.com/michalpalka/dit029-twitter-miner
