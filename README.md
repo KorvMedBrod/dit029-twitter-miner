@@ -20,11 +20,11 @@ This is a demonstrator Twitter streaming API client for the DIT029 course at [Go
 
 1.  Clone the repo
 
-        $ git clone https://github.com/KorvMedBrod/dit029-twitter-miner.git
+        $ git clone https://github.com/KorvMedBrod/twitter-minerr.git
 
 1.  Get the dependencies
 
-        $ cd dit029-twitter-miner/
+        $ cd twitter-miner/
         $ rebar get-deps
 
 1.  Compile the dependencies and the package
