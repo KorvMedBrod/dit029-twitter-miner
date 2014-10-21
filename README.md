@@ -114,6 +114,5 @@ riak-erlang-client is the library that we use to connect to Riak over the protoc
 
 ## Author
 
->>>>>>> 2adf4be0d145b23718afd1070a955ede32f26f50
 * Michał Pałka (michalpalka) <michal.palka@chalmers.se>
 * https://github.com/michalpalka/dit029-twitter-miner
