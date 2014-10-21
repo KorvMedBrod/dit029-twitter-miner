@@ -105,7 +105,6 @@ ibrowse is an HTTP client allowing to close a connection while the request is st
 
 jiffy is a JSON parser, which uses efficient C code to perform the actual parsing. [mochijson2](https://github.com/bjnortier/mochijson2) is another alternative that could be used here.
 
-<<<<<<< HEAD
 ## Original Author
 =======
 ### [riakc](https://github.com/basho/riak-erlang-client)
