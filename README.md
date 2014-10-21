@@ -20,7 +20,7 @@ This is a demonstrator Twitter streaming API client for the DIT029 course at the
 
 1.  Clone the repo
 
-        $ git clone https://github.com/KorvMedBrod/twitter-minerr.git
+        $ git clone https://github.com/KorvMedBrod/twitter-miner.git
 
 1.  Get the dependencies
 
