@@ -65,6 +65,6 @@ twitter_save_pipeline(R, URL, Keys) ->
 % We save only objects that have ids.
 save_tweet(R, {parsed_tweet, _L, B, {id, I}}) ->
   Obj = riakc_obj:new(<<"tweets">>, list_to_binary(integer_to_list(I)), B),
+  io:fwrite("Saving in database~n", Obj).
   riakc_pb_socket:put(R, Obj, [{w, 0}]);
 save_tweet(_, _) -> ok.
-
