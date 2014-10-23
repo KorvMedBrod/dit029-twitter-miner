@@ -49,7 +49,7 @@ twitter_example() ->
 %% saves tweets to Riak. We save all messages that have ids,
 %% which might include delete notifications etc.
 twitter_save_pipeline(R, URL, Keys) ->
-  io:fwrite("pipeline keys~n", Keys),
+  io:format("pipeline keys~n", Keys),
 
   Prod = twitterminer_source:twitter_producer(URL, Keys),
 
@@ -65,6 +65,6 @@ twitter_save_pipeline(R, URL, Keys) ->
 % We save only objects that have ids.
 save_tweet(R, {parsed_tweet, _L, B, {id, I}}) ->
   Obj = riakc_obj:new(<<"tweets">>, list_to_binary(integer_to_list(I)), B),
-  io:fwrite("Saving in database~n", Obj),
+  io:format("Saving in database~n", Obj),
   riakc_pb_socket:put(R, Obj, [{w, 0}]);
 save_tweet(_, _) -> ok.
