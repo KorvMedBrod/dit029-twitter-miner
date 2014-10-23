@@ -20,6 +20,8 @@ get_riak_hostport(Name) ->
 
 %% @doc This example will download a sample of tweets and print it.
 twitter_example() ->
+  io:format("Starting...~n"),
+
   URL = "https://stream.twitter.com/1.1/statuses/sample.json",
 
   % We get our keys from the twitterminer.config configuration file.
