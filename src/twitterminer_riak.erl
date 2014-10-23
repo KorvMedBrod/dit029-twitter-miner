@@ -49,7 +49,7 @@ twitter_example() ->
 %% saves tweets to Riak. We save all messages that have ids,
 %% which might include delete notifications etc.
 twitter_save_pipeline(R, URL, Keys) ->
-
+  io:fwrite("pipeline keys~n", Keys),
 
   Prod = twitterminer_source:twitter_producer(URL, Keys),
 
