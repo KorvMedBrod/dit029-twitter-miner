@@ -68,7 +68,7 @@ twitter_producer(URL, Keys) ->
 % It also has to handle the 'terminate' message.
 receive_tweets({init, URL, Keys}) ->
 
-  % Twitter streaming API requires a persistent HTTP connection with an infinite stream. 
+  % Twitter streaming API requires a persistent HTTP connection with an infinite stream.
   % HTTP has not really been made for that, and the only way of cancelling your request
   % is to drop the whole TCP connection, which is why we spawn a separate ibrowse worker
   % for our connection. We use the ibrowse HTTP client.
@@ -90,7 +90,7 @@ receive_tweets({init, URL, Keys}) ->
   % I have never managed to receive a stall warning, but it would
   % be a good idea to handle them somehow (or at least log).
   SignedParams = oauth:sign("GET", URL, [{delimited, length},
-    {stall_warnings, true}], Consumer, AccessToken, AccessTokenSecret),
+    {stall_warnings, true}, {language, en}], Consumer, AccessToken, AccessTokenSecret),
 
   % We use stream_to self() to get the HTTP stream delivered to our process as individual messages.
   % We send the authentication parameters encoded in URI. I tried putting them in HTTP
@@ -213,7 +213,7 @@ split_loop(Sink, Sender, Buffer) ->
 % in the buffer, get more messages from the pipeline.
 buffer_pop_n(B, N, Sender) ->
   if
-    byte_size(B) < N -> 
+    byte_size(B) < N ->
       Sender ! next,
       receive
         {message, Part} ->
