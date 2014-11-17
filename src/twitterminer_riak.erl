@@ -7,7 +7,7 @@ twitter_print_pipeline/2, twitter_producer/2]).
 -record(account_keys, {api_key, api_secret,
                        access_token, access_token_secret}).
 
-% This file contains example code that connects to Twitter and saves tweets to Riak.
+% This file has been refactored with functions from twitterminer_source
 
 keyfind(Key, L) ->
   {Key, V} = lists:keyfind(Key, 1, L),
