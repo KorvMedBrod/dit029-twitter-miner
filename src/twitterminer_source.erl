@@ -33,7 +33,7 @@ twitter_example() ->
   T = spawn_link(fun () ->
         receive
           cancel -> ok
-        after 60000 -> % Sleep fo 60 s
+        after 10000 -> % Sleep fo 60 s
             twitterminer_pipeline:terminate(P)
         end
     end),
@@ -149,15 +149,31 @@ extract(K, L) ->
 % a JSON parser written in Erlang, which is slower than jiffy,
 % but does not have this safety issue.
 decorate_with_id(B) ->
-  case jiffy:decode(B) of
-    {L} ->
-      case lists:keyfind(<<"id">>, 1, L) of
-        {_, I} -> {parsed_tweet, L, B, {id, I}};
-        false  -> {parsed_tweet, L, B, no_id}
-      end;
-    _ -> {invalid_tweet, B}
-  end.
+C = jiffy:decode(B),
+%% io:format("Jiff: ~p~n", [C]),
+Key = ej:get({"id"}, C), 
+Jobj = ej:get({"entities","hashtags"}, C),
+Ht_list = get_ht(Jobj),
+case length(Ht_list) > 1 of
+	true -> {parsed_tweet, Ht_list, {id, Key}};
+	false -> {ok}
+end. 
+%% case jiffy:decode(B) of
+%%    {L} ->
+%%      case lists:keyfind(<<"hashtags">>, 1, L) of
+%%        {_, I} -> io:format("HT: ~p~n",[I]),  {parsed_tweet, L, B, {id, I}};
+%%        false  -> {parsed_tweet, L, B, no_id}
+%%      end;
+%%    _ -> {invalid_tweet, B}
+%%  end.
 
+get_ht(L) -> get_ht(L, []).
+get_ht([], Acc) -> Acc;
+get_ht([H|T], Acc) ->
+	case H of
+		{[{_,H2},{_,_}]} -> io:format("HT: ~p~n", [H2]), get_ht(T, [H2|Acc]);
+        _ -> io:format("No HT~n"), get_ht(T)
+	end.
 my_print(T) ->
   case T of
     {parsed_tweet, L, B, _} ->
@@ -165,7 +181,8 @@ my_print(T) ->
         {found, _} -> io:format("~s~n", [B]);
         not_found -> ok
       end,
-      case extract(<<"text">>, L) of
+        case extract(<<"text">>, L) of
+	%%  case extract(<<"hashtags">>, L) of
         {found, TT} -> io:format("tweet: ~ts~n", [TT]);
         not_found -> ok
           %case extract(<<"delete">>, L) of

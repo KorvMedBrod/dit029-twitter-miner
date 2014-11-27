@@ -64,8 +64,8 @@ twitter_save_pipeline(R, URL, Keys) ->
     Prod].
 
 % We save only objects that have ids.
-save_tweet(R, {parsed_tweet, _L, B, {id, I}}) ->
+save_tweet(R, {parsed_tweet, B, {id, I}}) -> %%changed
   io:format("Saving tweet~n"),
-  Obj = riakc_obj:new(<<"tweets">>, list_to_binary(integer_to_list(I)), B),
+  Obj = riakc_obj:new(<<"hashtags">>, list_to_binary(integer_to_list(I)), B), %%changed
   riakc_pb_socket:put(R, Obj, [{w, 0}]);
 save_tweet(_, _) -> ok.
