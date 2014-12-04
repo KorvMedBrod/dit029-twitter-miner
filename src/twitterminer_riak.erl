@@ -1,6 +1,6 @@
 -module(twitterminer_riak).
 
--export([twitter_example/0, twitter_save_pipeline/3, get_riak_hostport/1, start/1]).
+-export([twitter_example/0, twitter_save_pipeline/3, get_riak_hostport/1, start/0]).
 
 -record(hostport, {host, port}).
 
