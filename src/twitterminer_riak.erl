@@ -6,6 +6,7 @@
 
 %in order to start it headless
 start() ->
+  application:ensure_all_started(twitterminer),
   twitter_example().
 
 
