@@ -151,13 +151,13 @@ extract(K, L) ->
 decorate_with_id(B) ->
 C = jiffy:decode(B),
 %% io:format("Jiff: ~p~n", [C]),
-Key = ej:get({"id"}, C), 
+Key = ej:get({"id"}, C),
 Jobj = ej:get({"entities","hashtags"}, C),
 Ht_list = get_ht(Jobj),
 case length(Ht_list) > 1 of
 	true -> {parsed_tweet, Ht_list, {id, Key}};
 	false -> {ok}
-end. 
+end.
 %% case jiffy:decode(B) of
 %%    {L} ->
 %%      case lists:keyfind(<<"hashtags">>, 1, L) of
@@ -171,7 +171,8 @@ get_ht(L) -> get_ht(L, []).
 get_ht([], Acc) -> Acc;
 get_ht([H|T], Acc) ->
 	case H of
-		{[{_,H2},{_,_}]} -> io:format("HT: ~p~n", [H2]), get_ht(T, [H2|Acc]);
+		%{[{_,H2},{_,_}]} -> io:format("HT: ~p~n", [H2]), get_ht(T, [H2|Acc]);
+    {[{_,H2},{_,_}]} -> get_ht(T, [H2|Acc]);
         _ -> io:format("No HT~n"), get_ht(T)
 	end.
 my_print(T) ->
