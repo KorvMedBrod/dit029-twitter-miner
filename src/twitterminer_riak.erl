@@ -1,8 +1,13 @@
 -module(twitterminer_riak).
 
--export([twitter_example/0, twitter_save_pipeline/3, get_riak_hostport/1]).
+-export([twitter_example/0, twitter_save_pipeline/3, get_riak_hostport/1, start/1]).
 
 -record(hostport, {host, port}).
+
+%in order to start it headless
+start() ->
+  twitter_example().
+
 
 % This file contains example code that connects to Twitter and saves tweets to Riak.
 % It would benefit from refactoring it together with twitterminer_source.erl.
@@ -38,7 +43,7 @@ twitter_example() ->
   T = spawn_link(fun () ->
         receive
           cancel -> ok
-        after 60000 -> % Sleep fo 60 s
+        after 6000000 -> % Sleep fo 6000 s
             twitterminer_pipeline:terminate(P)
         end
     end),
