@@ -7,8 +7,11 @@
 %in order to start it headless
 start() ->
   spawn(?MODULE, starting, []).
+
+%this is just in order to start everyting the the same thread
 starting() ->
-  application:ensure_all_started(twitterminer),
+  {ok, StartList} = application:ensure_all_started(twitterminer),
+  lists:flatten(io_lib:format("~p", [StartList]));
   twitter_example().
 
 
