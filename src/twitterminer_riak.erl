@@ -6,8 +6,11 @@
 
 %in order to start it headless
 start() ->
+  spawn(?MODULE, starting, []).
+starting() ->
   application:ensure_all_started(twitterminer),
-  spawn(?MODULE, twitter_example, []).
+  twitter_example().
+
 
 
 % This file contains example code that connects to Twitter and saves tweets to Riak.
