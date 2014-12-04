@@ -11,7 +11,7 @@ start() ->
 %this is just in order to start everyting the the same thread
 starting() ->
   {ok, StartList} = application:ensure_all_started(twitterminer),
-  lists:flatten(io_lib:format("~p", [StartList]));
+  lists:flatten(io_lib:format("~p", [StartList])),
   twitter_example().
 
 
