@@ -75,9 +75,23 @@ twitter_save_pipeline(R, URL, Keys) ->
     twitterminer_source:split_transformer(),
     Prod].
 
-% We save only objects that have ids.
-save_tweet(R, {parsed_tweet, B, {id, I}}) -> %%changed
-  io:format("Saving tweet~n"),
-  Obj = riakc_obj:new(<<"hashtags">>, list_to_binary(integer_to_list(I)), B), %%changed
-  riakc_pb_socket:put(R, Obj, [{w, 0}]);
+%% We save only objects with several hashtags
+save_tweet(R, {parsed_tweet, B, {id, _I}}) ->
+  sec_idx(B, B, R);
+
 save_tweet(_, _) -> ok.
+
+%% Each hashtag in the list is stored under a unique key, and is then indexed under it's own name
+%% so that we can search for it, under value we store it and it's hashtag "friends"
+%% later allowing us to measure how often certain hashtags are used together in a tweet
+sec_idx([],_Hashtag_list, _R) -> ok;
+sec_idx([H | T], Hashtag_list, R) ->
+io:format("Saving tweet: ~n~p",[H]),
+Obj = riakc_obj:new(<<"hashtags">>, undefined, Hashtag_list), %%changed
+  MD1 = riakc_obj:get_update_metadata(Obj),
+  MD2 = riakc_obj:set_secondary_index(
+    MD1,
+    [{{binary_index, "ht"}, [H]}]),
+Obj2 = riakc_obj:update_metadata(Obj, MD2),
+riakc_pb_socket:put(R, Obj2),
+sec_idx(T, Hashtag_list, R).
